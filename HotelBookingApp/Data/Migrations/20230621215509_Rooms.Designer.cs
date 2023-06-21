@@ -4,6 +4,7 @@ using HotelBookingApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelBookingApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230621215509_Rooms")]
+    partial class Rooms
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,39 +23,6 @@ namespace HotelBookingApp.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("HotelBookingApp.Models.Booking", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CheckInDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("CheckOutDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoomId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("RoomId");
-
-                    b.ToTable("Bookings");
-                });
 
             modelBuilder.Entity("HotelBookingApp.Models.Customer", b =>
                 {
@@ -92,18 +61,6 @@ namespace HotelBookingApp.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Customers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "Oradea, nr 1",
-                            Email = "mihai.costar99@gmail.com",
-                            FirstName = "Mihai",
-                            LastName = "Costar",
-                            Phone = "0766520998",
-                            UserId = "f6b0f090-8857-40a3-885a-c63a2507b988"
-                        });
                 });
 
             modelBuilder.Entity("HotelBookingApp.Models.Room", b =>
@@ -131,16 +88,6 @@ namespace HotelBookingApp.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Rooms");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Just a nice room",
-                            Number = 3,
-                            Price = 50,
-                            Type = "Single"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -258,25 +205,6 @@ namespace HotelBookingApp.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "f6b0f090-8857-40a3-885a-c63a2507b988",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "d19ea7db-6450-4698-a507-f44029215f30",
-                            Email = "mihai.costar99@gmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = true,
-                            NormalizedEmail = "MIHAI.COSTAR99@GMAIL.COM",
-                            NormalizedUserName = "MIHAI.COSTAR99@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEINxA840cC+vljpKZaHltbSYLb8xv2ljKtFERgogtJUsQnuJxaE4g0NCwS1aeSPm6Q==",
-                            PhoneNumber = "NULL",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "USIJR3TCWTENSFS7B3OMLRRRRRFOQEIE",
-                            TwoFactorEnabled = false,
-                            UserName = "mihai.costar99@gmail.com"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -362,25 +290,6 @@ namespace HotelBookingApp.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("HotelBookingApp.Models.Booking", b =>
-                {
-                    b.HasOne("HotelBookingApp.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HotelBookingApp.Models.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("HotelBookingApp.Models.Customer", b =>
