@@ -24,7 +24,7 @@
                             <hr class="m-0 pt-2 mt-2">
                         </div>
                         <div class="col-lg-12">
-                            <p class="tag-section"><strong>Room number : </strong><span>@Model.Number.ToString().PadLeft(3, '0')</span></p>
+                            <p class="tag-section"><strong>Room number : </strong><span>@Model.PaddedNumber()</span></p>
                         </div>
                         <div class="col-lg-12">
                             <p class="tag-section"><strong>Type : </strong><span>@Model.Type</span></p>
@@ -35,7 +35,7 @@
                                     @{
                                         if (User.Identity.IsAuthenticated)
                                         {
-                                            @Html.ActionLink("Checkout", "Checkout", "Booking", new { roomId = Model.Id }, new { @class = "btn btn-primary btn-lg btn-block mt-2" })
+                                            @Html.ActionLink("Checkout", "Index", "Booking", new { roomId = Model.Id }, new { @class = "btn btn-primary btn-lg btn-block mt-2" })
                                         }else{
                                             <a class="btn btn-primary btn-lg btn-block mt-2" asp-area="Identity" asp-page="/Account/Login">Login</a>
                                     }
@@ -51,4 +51,5 @@
 </div>
 
 @{
+    ViewBag.Title = "Details";
 }

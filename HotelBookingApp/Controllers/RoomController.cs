@@ -1,6 +1,4 @@
-﻿using HotelBookingApp.Data;
-using HotelBookingApp.Services.CustomerService;
-using HotelBookingApp.Services.RoomService;
+﻿using HotelBookingApp.Services.RoomService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelBookingApp.Controllers
@@ -18,8 +16,7 @@ namespace HotelBookingApp.Controllers
             var rooms = (await _roomService.GetRoomsAsync()).Data;
             return View(rooms);
         }
-        [HttpGet]
-        [Route("/{roomId}")]
+        [Route("room/{roomId}")]
         public async Task<IActionResult> Details(int roomId)
         {
             var room = (await _roomService.GetRoomAsync(roomId)).Data;

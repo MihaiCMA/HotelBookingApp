@@ -1,0 +1,118 @@
+﻿@model CheckoutViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<section class="h-100 h-custom">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body p-4">
+                        <form action="/booking/submit" method="post">
+                            <div class="row">
+
+                                <div class="col-lg-7">
+                                    <hr>
+
+                                    <div class="card mb-3 mb-lg-0">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="d-flex flex-row align-items-center">
+                                                    <div>
+                                                        <img src="@Model.Room.ImageUrl"
+                                                             class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
+                                                    </div>
+                                                    <div class="ms-3">
+                                                        <h5>@Model.Room.Name</h5>
+                                                        <p class="small mb-0">@Model.Room.PaddedNumber()</p>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex flex-row align-items-center">
+                                                    <div style="width: 80px;">
+                                                        <h5 class="mb-0">$@Model.Room.Price</h5>
+                                                    </div>
+                                                    <a href="#!" style="color: #cecece;"><i class="fas fa-trash-alt"></i></a>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label for="start">Start date:</label>
+
+                                                @*                                            <input type="date" id="start" name="checkin"
+                                                value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")"
+                                                min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" max="@DateTime.Now.AddYears(3).AddDays(-1).ToString("yyyy-MM-dd")">*@
+                                                @Html.EditorFor(model => model.Booking.CheckInDate, new { htmlAttributes = new { @class = "form-control", @type = "date", @min = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd"), @max = DateTime.Now.AddYears(3).AddDays(-1).ToString("yyyy-MM-dd"), @id = "start", @name = "checkin" } })
+
+                                                <label for="start">End date:</label>
+
+                                                @*                                            <input type="date" id="end" name="checkout"
+                                                value="@DateTime.Now.AddDays(2).ToString("yyyy-MM-dd")"
+                                                min="@DateTime.Now.AddDays(2).ToString("yyyy-MM-dd")" max="@DateTime.Now.AddYears(3).ToString("yyyy-MM-dd")">*@
+                                                @Html.EditorFor(model => model.Booking.CheckOutDate, new { htmlAttributes = new { @type = "date", @class = "form-control", @min = DateTime.Now.AddDays(2).ToString("yyyy-MM-dd"), @max = DateTime.Now.AddYears(3).ToString("yyyy-MM-dd"), @id = "end", @name = "checkout" } })
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-5">
+
+                                    <div class="card bg-light text-black rounded-3">
+                                        <div class="card-body">
+                                            <hr class="my-4">
+
+                                            <div class="d-flex justify-content-between">
+                                                <p class="mb-2">Number of nights</p>
+                                                <p class="mb-2" id="nrOfNights"></p>
+                                            </div>
+
+                                            <div class="d-flex justify-content-between">
+                                                <p class="mb-2">Total Price</p>
+                                                <p class="mb-2" id="totalPrice"></p>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-info btn-block btn-lg">
+                                                <div class="d-flex justify-content-between">
+                                                    <span>Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var checkInDate = new Date("@Model.Booking.CheckInDate.ToString("yyyy-MM-dd")");
+            $("#start").val(checkInDate.toISOString().substring(0, 10));
+
+            var checkOutDate = new Date("@Model.Booking.CheckOutDate.ToString("yyyy-MM-dd")");
+            $("#end").val(checkOutDate.toISOString().substring(0, 10));
+
+
+            var startDate = new Date($("#start").val());
+            var endDate = new Date($("#end").val());
+            var numberOfNights = Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
+            $("#nrOfNights").text(numberOfNights);
+            $("#totalPrice").text(numberOfNights * @Model.Room.Price);
+            // Update the total price whenever the start or end date changes
+            $("#start, #end").on("change", function () {
+                var startDate = new Date($("#start").val());
+                var endDate = new Date($("#end").val());
+                var numberOfNights = Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
+                $("#nrOfNights").text(numberOfNights);
+                $("#totalPrice").text(numberOfNights * @Model.Room.Price);
+            });
+        });
+    </script>
+}
+

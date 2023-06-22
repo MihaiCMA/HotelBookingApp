@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HotelBookingApp.Controllers
 {
-    [Route("Customer")]
     public class CustomerController : Controller
     {
         private readonly ICustomerService _customerService;
@@ -17,7 +16,7 @@ namespace HotelBookingApp.Controllers
             return View();
         }
 
-        [HttpGet("{customerId}")]
+        [HttpGet("customer/{customerId}")]
         public async Task<ViewResult> Details(int customerId)
         {
             var customers = (await _customerService.GetCustomersAsync()).Data.Where(c => c.Id == customerId).FirstOrDefault();

@@ -6,5 +6,7 @@ namespace HotelBookingApp.Services.BookingService
     {
         Task<ServiceResponse<Booking>> GetBookingAsync(int bookingId);
         Task<ServiceResponse<List<Booking>>> GetBookingsAsync();
+        Task<ServiceResponse<Boolean>> CheckRoomOverlapAsync(Booking booking);
+        Task<ServiceResponse<Booking>> CreateBookingAsync(Booking booking);
     }
 }

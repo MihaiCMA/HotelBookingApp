@@ -1,4 +1,5 @@
 using HotelBookingApp.Data;
+using HotelBookingApp.Services.BookingService;
 using HotelBookingApp.Services.CustomerService;
 using HotelBookingApp.Services.RoomService;
 using Microsoft.AspNetCore.Identity;
@@ -24,6 +25,7 @@ namespace HotelBookingApp
 
             builder.Services.AddScoped<ICustomerService, CustomerService>();
             builder.Services.AddScoped<IRoomService, RoomService>();
+            builder.Services.AddScoped<IBookingService, BookingService>();
 
             var app = builder.Build();
 
