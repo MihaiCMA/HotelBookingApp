@@ -19,5 +19,19 @@ namespace HotelBookingApp.Services.RoomService
                 Data =rooms 
             };
         }
+
+        public async Task<ServiceResponse<Room>> GetRoomAsync(int roomId)
+        {
+            var room = await _context.Rooms.FindAsync(roomId);
+            if (room == null)
+            {
+                return new ServiceResponse<Room> { Success = false };
+            }
+
+            return new ServiceResponse<Room>
+            {
+                Data = room
+            };
+        }
     }
 }

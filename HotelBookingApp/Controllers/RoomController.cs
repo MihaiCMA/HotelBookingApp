@@ -18,5 +18,13 @@ namespace HotelBookingApp.Controllers
             var rooms = (await _roomService.GetRoomsAsync()).Data;
             return View(rooms);
         }
+
+        [HttpGet]
+        [Route("/{roomId}")]
+        public async Task<IActionResult> Details(int roomId)
+        {
+            var room = (await _roomService.GetRoomAsync(roomId)).Data;
+            return View(room);
+        }
     }
 }

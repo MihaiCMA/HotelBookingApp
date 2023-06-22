@@ -1,0 +1,54 @@
+﻿@model Room
+
+<div class="container">
+    <div class="col-lg-8 border p-3 main-section bg-white">
+        <div class="row m-0">
+            <div class="col-lg-4 left-side-product-box pb-3">
+                <img src="@Model.ImageUrl" class="border p-3">
+            </div>
+            <div class="col-lg-8">
+                <div class="right-side-pro-detail border p-3 m-0">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p class="m-0 p-0">@Model.Name</p>
+                        </div>
+                        <div class="col-lg-12">
+                            <span>Price:</span><span class="m-0 p-0 price-pro"> $@Model.Price</span><span>/night</span>
+                            <hr class="p-0 m-0">
+                        </div>
+                        <div class="col-lg-12 pt-2">
+                            <h5>Room Description</h5>
+                            <span>
+                                @Model.Description
+                            </span>
+                            <hr class="m-0 pt-2 mt-2">
+                        </div>
+                        <div class="col-lg-12">
+                            <p class="tag-section"><strong>Room number : </strong><span>@Model.Number.ToString().PadLeft(3, '0')</span></p>
+                        </div>
+                        <div class="col-lg-12">
+                            <p class="tag-section"><strong>Type : </strong><span>@Model.Type</span></p>
+                        </div>
+                        <div class="col-lg-12 mt-3">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    @{
+                                        if (User.Identity.IsAuthenticated)
+                                        {
+                                            @Html.ActionLink("Checkout", "Checkout", "Booking", new { roomId = Model.Id }, new { @class = "btn btn-primary btn-lg btn-block mt-2" })
+                                        }else{
+                                            <a class="btn btn-primary btn-lg btn-block mt-2" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                                    }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+}

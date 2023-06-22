@@ -4,6 +4,7 @@ using HotelBookingApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelBookingApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230622150814_RoomNameNImageDataSeed")]
+    partial class RoomNameNImageDataSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -149,36 +151,6 @@ namespace HotelBookingApp.Data.Migrations
                             Name = "Ocean Suite",
                             Number = 3,
                             Price = 50,
-                            Type = "Single"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "A bigger room, but just as nice",
-                            ImageUrl = "https://www.greatwolf.com/content/dam/greatwolf/sites/www/locations/georgia/Suites/Premium/Grizzly%20Bear%20Suite/Grizzly_Bear_Suite_living-room-767x434.jpg",
-                            Name = "Grizzly Suite",
-                            Number = 2,
-                            Price = 70,
-                            Type = "Double"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "A misterious room",
-                            ImageUrl = "https://osiristours.com/wp-content/uploads/2019/06/CAF_384_original.jpg",
-                            Name = "Egypt Suite",
-                            Number = 1,
-                            Price = 60,
-                            Type = "Single"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "A room close to nature",
-                            ImageUrl = "https://mayaresorts.com/assets/images/ubud/accommodation/impressive-forest-suite/gallery-desktop-thumbnails/ifs-gdt-1.jpg",
-                            Name = "Forest Suite",
-                            Number = 4,
-                            Price = 45,
                             Type = "Single"
                         });
                 });

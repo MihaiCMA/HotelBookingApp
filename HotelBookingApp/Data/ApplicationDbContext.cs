@@ -55,7 +55,39 @@ namespace HotelBookingApp.Data
                     Number = 3,
                     Type = "Single",
                     Description = "Just a nice room",
-                    Price = 50
+                    Price = 50,
+                    Name = "Ocean Suite",
+                    ImageUrl = "https://cdn.jumeirah.com/-/mediadh/dh/hospitality/jumeirah/hotels/dubai/madinat-jumeirah/al-naseem-at-madinat-jumeirah/rooms/ocean-suite/al-naseem--ocean-suite--bedroom.jpg?h=1080&w=1920"
+                },
+                new Room
+                {
+                    Id = 2,
+                    Number = 2,
+                    Type = "Double",
+                    Description = "A bigger room, but just as nice",
+                    Price = 70,
+                    Name = "Grizzly Suite",
+                    ImageUrl = "https://www.greatwolf.com/content/dam/greatwolf/sites/www/locations/georgia/Suites/Premium/Grizzly%20Bear%20Suite/Grizzly_Bear_Suite_living-room-767x434.jpg"
+                },
+                new Room
+                {
+                    Id = 3,
+                    Number = 1,
+                    Type = "Single",
+                    Description = "A misterious room",
+                    Price = 60,
+                    Name = "Egypt Suite",
+                    ImageUrl = "https://osiristours.com/wp-content/uploads/2019/06/CAF_384_original.jpg"
+                },
+                new Room
+                {
+                    Id = 4,
+                    Number = 4,
+                    Type = "Single",
+                    Description = "A room close to nature",
+                    Price = 45,
+                    Name = "Forest Suite",
+                    ImageUrl = "https://mayaresorts.com/assets/images/ubud/accommodation/impressive-forest-suite/gallery-desktop-thumbnails/ifs-gdt-1.jpg"
                 }
                 );
         }
