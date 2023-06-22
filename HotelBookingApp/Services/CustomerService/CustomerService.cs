@@ -1,5 +1,6 @@
 ﻿using HotelBookingApp.Data;
 using HotelBookingApp.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelBookingApp.Services.CustomerService
@@ -11,6 +12,21 @@ namespace HotelBookingApp.Services.CustomerService
         public CustomerService(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        public async Task<ServiceResponse<Customer>> CreateCustomerAsync(IdentityUser identityUser)
+        {
+            var customer = new Customer
+            {
+                UserId = identityUser.Id,
+                Email = identityUser.Email,
+            };
+            await _context.Customers.AddAsync(customer);
+            await _context.SaveChangesAsync();
+            return new ServiceResponse<Customer>
+            {
+                Data = customer
+            };
         }
 
         public async Task<ServiceResponse<List<Customer>>> GetCustomersAsync()
