@@ -1,39 +1,40 @@
-﻿@*
+﻿@model List<Room>
+
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
 @{
-	ViewData["Title"] = "Room List";
+    ViewData["Title"] = "Room List";
 }
 
-<section class="section-products">
-	<div class="container">
-		<div class="row justify-content-center text-center">
-			<div class="col-md-8 col-lg-6">
-				<div class="header">
-					<h3>Featured Product</h3>
-					<h2>Popular Products</h2>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<!-- Single Product -->
-			<div class="col-md-6 col-lg-4 col-xl-3">
-				<div id="product-1" class="single-product">
-					<div class="part-1">
-						<ul>
-							<li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
-							<li><a href="#"><i class="fas fa-heart"></i></a></li>
-							<li><a href="#"><i class="fas fa-plus"></i></a></li>
-							<li><a href="#"><i class="fas fa-expand"></i></a></li>
-						</ul>
-					</div>
-					<div class="part-2">
-						<h3 class="product-title">Here Product Title</h3>
-						<h4 class="product-old-price">$79.99</h4>
-						<h4 class="product-price">$49.99</h4>
-					</div>
-				</div>
-			</div>
-	</div>
-</section>
+<div class="container mt-5 mb-5">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-10">
+            @foreach (var room in Model)
+            {
+                <div class="row p-2 bg-white border rounded">
+                    <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="https://i.imgur.com/QpjAiHq.jpg"></div>
+                    <div class="col-md-6 mt-1">
+                        <h5>@room.Number</h5>
+                        <div class="d-flex flex-row">
+                            <div class="ratings mr-2"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div><span>310</span>
+                        </div>
+                        <div class="mt-1 mb-1 spec-1"><span>100% cotton</span><span class="dot"></span><span>Light weight</span><span class="dot"></span><span>Best finish<br></span></div>
+                        <div class="mt-1 mb-1 spec-1"><span>Unique design</span><span class="dot"></span><span>For men</span><span class="dot"></span><span>Casual<br></span></div>
+                        <p class="text-justify text-truncate para mb-0">@room.Description<br><br></p>
+                    </div>
+                    <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+                        <div class="d-flex flex-row align-items-center">
+                            <h4 class="mr-1">$@room.Price</h4>@*<span class="strike-text">$20.99</span>*@
+                        </div>
+@*                        <h6 class="text-success">Free shipping</h6>*@
+                        <div class="d-flex flex-column mt-4">
+@*                            <button class="btn btn-primary btn-sm" type="button">Details</button>*@
+                            <button class="btn btn-outline-primary btn-sm mt-2" type="button">Checkout</button></div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

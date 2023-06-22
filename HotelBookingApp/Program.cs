@@ -1,5 +1,6 @@
 using HotelBookingApp.Data;
 using HotelBookingApp.Services.CustomerService;
+using HotelBookingApp.Services.RoomService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,6 +23,7 @@ namespace HotelBookingApp
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddScoped<ICustomerService, CustomerService>();
+            builder.Services.AddScoped<IRoomService, RoomService>();
 
             var app = builder.Build();
 
@@ -47,7 +49,8 @@ namespace HotelBookingApp
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Room}/{action=Index}");
+
             app.MapRazorPages();
 
             app.Run();
