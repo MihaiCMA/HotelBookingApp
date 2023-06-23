@@ -29,6 +29,15 @@ namespace HotelBookingApp.Services.CustomerService
             };
         }
 
+        public async Task<ServiceResponse<Customer>> GetCustomerByUserAsync(IdentityUser identityUser)
+        {
+            var customer = await _context.Customers.Where(c => c.UserId == identityUser.Id).FirstOrDefaultAsync();
+            return new ServiceResponse<Customer>
+            {
+                Data = customer
+            };
+        }
+
         public async Task<ServiceResponse<List<Customer>>> GetCustomersAsync()
         {
             var customers = await _context.Customers.ToListAsync();

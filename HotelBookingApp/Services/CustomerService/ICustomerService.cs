@@ -6,6 +6,7 @@ namespace HotelBookingApp.Services.CustomerService
     public interface ICustomerService
     {
         Task<ServiceResponse<List<Customer>>> GetCustomersAsync();
+        Task<ServiceResponse<Customer>> GetCustomerByUserAsync(IdentityUser identityUser);
         Task<ServiceResponse<Customer>> CreateCustomerAsync(IdentityUser identityUser);
     }
 }
