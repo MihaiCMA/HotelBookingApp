@@ -1,0 +1,18 @@
+﻿@model List<Booking>
+
+@if (Model != null && Model.Count > 0)
+{
+    <br />
+    <div>Please check the already existing reservations for this room:</div>
+    foreach (var booking in Model)
+    {
+        <div>
+            <h6>@booking.Room.Name</h6>
+            <label>Checkin and checkiut dates</label>
+            <p>From @booking.CheckInDate to @booking.CheckOutDate</p>
+        </div>
+    }
+}
+
+@{
+}

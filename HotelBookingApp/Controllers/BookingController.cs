@@ -36,6 +36,11 @@ namespace HotelBookingApp.Controllers
             model.Booking.RoomId = room.Id;
             model.Booking.Room = room;
 
+            var bookings = (await _bookingService.GetBookingsAsync()).Data.Where(b => b.RoomId == roomId).ToList();
+
+
+            ViewData["Bookings"] = bookings;
+
             if (TempData.ContainsKey("ErrorMessage"))
             {
                 ViewData["ErrorMessage"] = TempData["ErrorMessage"];
@@ -63,6 +68,13 @@ namespace HotelBookingApp.Controllers
             {
                 return RedirectToAction("Confirmation");
             }
+        }
+
+        [HttpGet]
+        [Route("booking/confirmation")]
+        public async Task<IActionResult> Confirmation()
+        {
+            return View();
         }
     }
 }
