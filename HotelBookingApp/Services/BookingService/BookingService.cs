@@ -71,7 +71,7 @@ namespace HotelBookingApp.Services.BookingService
                 return new ServiceResponse<Booking>
                 {
                     Success = false,
-                    Message = "There is an overlaping reservation for this room"
+                    Message = "There is an overlaping reservation for this room. Please choose another period."
                 };
             }
 

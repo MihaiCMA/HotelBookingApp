@@ -15,7 +15,6 @@
                             <div class="row">
 
                                 <div class="col-lg-7">
-                                    <hr>
 
                                     <div class="card mb-3 mb-lg-0">
                                         <div class="card-body">
@@ -55,7 +54,7 @@
                                             </div>
                                             @if (ViewData["ErrorMessage"] != null && ViewData["ErrorMessage"].ToString() != "")
                                             {
-                                                <span>@ViewData["ErrorMessage"].ToString()</span>
+                                                <span class="alert-danger">@ViewData["ErrorMessage"].ToString()</span>
                                             }
                                         </div>
                                     </div>

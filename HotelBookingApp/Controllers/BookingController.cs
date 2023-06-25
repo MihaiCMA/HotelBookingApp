@@ -37,6 +37,7 @@ namespace HotelBookingApp.Controllers
             model.Booking.Room = room;
 
             var bookings = (await _bookingService.GetBookingsAsync()).Data.Where(b => b.RoomId == roomId).ToList();
+            bookings.Sort(CompareBookings);
 
 
             ViewData["Bookings"] = bookings;
@@ -47,6 +48,11 @@ namespace HotelBookingApp.Controllers
             }
 
             return View(model);
+        }
+
+        private static int CompareBookings(Booking a, Booking b)
+        {
+            return a.CheckInDate.CompareTo(b.CheckInDate);
         }
 
         [HttpPost]
@@ -73,6 +79,13 @@ namespace HotelBookingApp.Controllers
         [HttpGet]
         [Route("booking/confirmation")]
         public async Task<IActionResult> Confirmation()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [Route("mybookings")]
+        public async Task<IActionResult> MyBookings()
         {
             return View();
         }
