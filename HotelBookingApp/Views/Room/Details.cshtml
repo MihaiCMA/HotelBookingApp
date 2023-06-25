@@ -1,5 +1,9 @@
 ﻿@model Room
 
+@{
+    ViewBag.Title = "Room Details";
+}
+
 <div class="container">
     <div class="col-lg-8 border p-3 main-section bg-white">
         <div class="row m-0">
@@ -36,9 +40,11 @@
                                         if (User.Identity.IsAuthenticated)
                                         {
                                             @Html.ActionLink("Checkout", "Index", "Booking", new { roomId = Model.Id }, new { @class = "btn btn-primary btn-lg btn-block mt-2" })
-                                        }else{
+                                        }
+                                        else
+                                        {
                                             <a class="btn btn-primary btn-lg btn-block mt-2" asp-area="Identity" asp-page="/Account/Login">Login</a>
-                                    }
+                                        }
                                     }
                                 </div>
                             </div>

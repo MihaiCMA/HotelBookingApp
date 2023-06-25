@@ -1,12 +1,12 @@
 ﻿@model List<Room>
 
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-
 @{
     ViewData["Title"] = "Room List";
 }
+<div class="container">
+    <a href="/room/createroom" class="btn btn-primary">Create Room</a>
+</div>
+
 
 <div class="container mt-5 mb-5">
     <div class="d-flex justify-content-center row">
@@ -29,7 +29,7 @@
                         <div class="d-flex flex-column mt-4">
                             @Html.ActionLink("Details", "Details", "Room", new { roomId = room.Id }, new { @class = "btn btn-outline-primary btn-sm mt-2" })
                         </div>
-                
+
                     </div>
                 </div>
             }

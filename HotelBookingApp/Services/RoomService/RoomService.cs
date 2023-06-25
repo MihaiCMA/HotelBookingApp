@@ -33,5 +33,15 @@ namespace HotelBookingApp.Services.RoomService
                 Data = room
             };
         }
+
+        public async Task<ServiceResponse<Room>> CreateRoomAsync(Room room)
+        {
+            await _context.Rooms.AddAsync(room);
+            await _context.SaveChangesAsync();
+            return new ServiceResponse<Room>()
+            {
+                Data = room
+            };
+        }
     }
 }
