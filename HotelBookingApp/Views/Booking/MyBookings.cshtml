@@ -1,21 +1,18 @@
 ﻿
 
-<select class="selectpicker">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Barbecue</option>
+<select class="js-example-basic-single" name="state">
+    <option value="AL">Alabama</option>
+    <option value="WY">Wyoming</option>
 </select>
 
 
-<select id="my-select">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Barbecue</option>
-</select>
 
-@{
-}
+@section scripts {
+    <script>
 
-@section scripts{
-    $('#my-select').selectpicker();
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+        });
+
+    </script>
 }
