@@ -3,9 +3,13 @@
 @{
     ViewBag.Title = "My Bookings";
     var bookings = new List<Booking>();
+    bool isAdmin = User.IsInRole("Admin");
 }
 
-@Html.DropDownListFor(model => model.SelectedOption.Id, new SelectList(Model.OptionsList, "Id", "Text"), new { @class = "select2", onchange = "handleDropdownChange(this)" })
+@if (isAdmin)
+{
+    @Html.DropDownListFor(model => model.SelectedOption.Id, new SelectList(Model.OptionsList, "Id", "Text"), new { @class = "select2", onchange = "handleDropdownChange(this)" })
+}
 
 
 <div id="userBookingsContainer">
@@ -18,6 +22,11 @@
             console.log(selectedValue);
 
             var customerId = $(selectedValue).val();
+
+            dropDownGet(customerId);
+        }
+
+        function dropDownGet(customerId) {
 
             $.ajax({
                 type: 'POST',
@@ -35,7 +44,7 @@
         $(document).ready(function () {
             $('.select2').select2();
             $('.select2').select2({ width: '50%' });
-            handleDropdownChange($('.select2').find('option:selected'));
+            dropDownGet(@Model.SelectedOption.Id);
         });
     </script>
 }

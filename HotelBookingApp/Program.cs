@@ -9,7 +9,7 @@ namespace HotelBookingApp
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -19,15 +19,37 @@ namespace HotelBookingApp
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = true;
+            })
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultUI()
+                .AddRoles<IdentityRole>();
 
             builder.Services.AddScoped<ICustomerService, CustomerService>();
             builder.Services.AddScoped<IRoomService, RoomService>();
             builder.Services.AddScoped<IBookingService, BookingService>();
 
             var app = builder.Build();
+
+            // Seed default roles
+            using (var scope = app.Services.CreateScope())
+            {
+                var serviceProvider = scope.ServiceProvider;
+                var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                // Create default roles if they don't exist
+                var roles = new[] { "Admin", "User" };
+                foreach (var role in roles)
+                {
+                    var roleExists = await roleManager.RoleExistsAsync(role);
+                    if (!roleExists)
+                    {
+                        await roleManager.CreateAsync(new IdentityRole(role));
+                    }
+                }
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -55,7 +77,7 @@ namespace HotelBookingApp
 
             app.MapRazorPages();
 
-            app.Run();
+            await app.RunAsync();
         }
     }
 }
