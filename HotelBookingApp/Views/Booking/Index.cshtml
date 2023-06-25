@@ -38,17 +38,10 @@
                                             </div>
                                             <div>
                                                 <label for="start">Start date:</label>
-
-                                                @*                                            <input type="date" id="start" name="checkin"
-                                                value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")"
-                                                min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" max="@DateTime.Now.AddYears(3).AddDays(-1).ToString("yyyy-MM-dd")">*@
                                                 @Html.EditorFor(model => model.Booking.CheckInDate, new { htmlAttributes = new { @class = "form-control", @type = "date", @min = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd"), @max = DateTime.Now.AddYears(3).AddDays(-1).ToString("yyyy-MM-dd"), @id = "start", @name = "checkin" } })
 
                                                 <label for="start">End date:</label>
 
-                                                @*                                            <input type="date" id="end" name="checkout"
-                                                value="@DateTime.Now.AddDays(2).ToString("yyyy-MM-dd")"
-                                                min="@DateTime.Now.AddDays(2).ToString("yyyy-MM-dd")" max="@DateTime.Now.AddYears(3).ToString("yyyy-MM-dd")">*@
                                                 @Html.EditorFor(model => model.Booking.CheckOutDate, new { htmlAttributes = new { @type = "date", @class = "form-control", @min = DateTime.Now.AddDays(2).ToString("yyyy-MM-dd"), @max = DateTime.Now.AddYears(3).ToString("yyyy-MM-dd"), @id = "end", @name = "checkout" } })
 
                                             </div>
@@ -73,8 +66,10 @@
 
                                             <div class="d-flex justify-content-between">
                                                 <p class="mb-2">Total Price</p>
-                                                @Html.EditorFor(model => model.Booking.TotalPrice, new { htmlAttributes = new { @class = "form-control mb-2", @disabled = "disabled", @id = "totalPrice" } })
-
+                                                <div class="d-flex justify-content-between">
+                                                    @Html.HiddenFor(model => model.Booking.TotalPrice, new { @id = "totalPrice", @class = "form-control", @readonly = "readonly" })
+                                                    <p class="mb-2" id="displayTotalPrice"></p>
+                                                </div>
                                             </div>
 
                                             <button type="submit" class="btn btn-info btn-block btn-lg">
@@ -87,7 +82,7 @@
                                 </div>
                             </div>
                         </form>
-    <partial name="_RoomCalendar" model="@ViewData["Bookings"]" />
+                        <partial name="_RoomCalendar" model="@ViewData["Bookings"]" />
                     </div>
                 </div>
             </div>
@@ -97,28 +92,30 @@
 
 @section scripts{
     <script>
-        $(document).ready(function () {
+            $(document).ready(function () {
             var checkInDate = new Date("@Model.Booking.CheckInDate.ToString("yyyy-MM-dd")");
             $("#start").val(checkInDate.toISOString().substring(0, 10));
 
             var checkOutDate = new Date("@Model.Booking.CheckOutDate.ToString("yyyy-MM-dd")");
             $("#end").val(checkOutDate.toISOString().substring(0, 10));
 
-
-            var startDate = new Date($("#start").val());
-            var endDate = new Date($("#end").val());
-            var numberOfNights = Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
-            $("#nrOfNights").text(numberOfNights);
-            $("#totalPrice").val(numberOfNights * @Model.Room.Price);
-            // Update the total price whenever the start or end date changes
-            $("#start, #end").on("change", function () {
+            function calculateTotalPrice() {
                 var startDate = new Date($("#start").val());
                 var endDate = new Date($("#end").val());
                 var numberOfNights = Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
                 $("#nrOfNights").text(numberOfNights);
-                $("#totalPrice").val(numberOfNights * @Model.Room.Price);
+                var roomPrice = @Model.Room.Price;
+                var totalPrice = numberOfNights * roomPrice;
+                $("#totalPrice").val(totalPrice);
+                $("#displayTotalPrice").text("$" + totalPrice.toFixed(2));
+            }
+
+            calculateTotalPrice();
+
+            $("#start, #end").on("change", function () {
+                calculateTotalPrice();
             });
         });
+
     </script>
 }
-

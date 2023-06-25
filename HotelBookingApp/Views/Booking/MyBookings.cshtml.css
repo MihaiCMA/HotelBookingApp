@@ -1,0 +1,11 @@
+﻿.select2-results__option {
+    white-space: nowrap;
+}
+
+.select2.select2-container {
+    width: 100% !important;
+}
+
+#userBookingsContainer{
+    margin-bottom:2rem;
+}

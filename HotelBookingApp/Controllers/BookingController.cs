@@ -87,7 +87,32 @@ namespace HotelBookingApp.Controllers
         [Route("mybookings")]
         public async Task<IActionResult> MyBookings()
         {
-            return View();
+            var customers = (await _customerService.GetCustomersAsync()).Data;
+            var items = customers.Select(c => new Select2Item()
+            {
+                Id = c.Id.ToString(),
+                Text = c.LastName + " " + c.FirstName
+            }).ToList();
+            var user = await _userManager.GetUserAsync(User);
+            var currentCustomer = customers.Find(c => c.UserId == user.Id);
+            var selectedOption = items.Where(i => i.Id == currentCustomer.Id.ToString()).FirstOrDefault();
+            var model = new Select2ViewModel()
+            {
+                SelectedOption = selectedOption,
+                OptionsList = items
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("booking/updatebookings/{customerId}")]
+        public async Task<IActionResult> UpdateBookings(string customerId)
+        {
+            var selectedCustomerId = int.Parse(customerId);
+
+            var updatedBookings = (await _bookingService.GetBookingsAsync()).Data.Where(b=> b.CustomerId == selectedCustomerId).ToList();
+
+            return PartialView("_UserBookings", updatedBookings);
         }
     }
 }

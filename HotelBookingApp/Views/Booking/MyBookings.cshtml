@@ -1,18 +1,40 @@
-﻿
+﻿@model Select2ViewModel
 
-<select class="js-example-basic-single" name="state">
-    <option value="AL">Alabama</option>
-    <option value="WY">Wyoming</option>
-</select>
+@{
+    var bookings = new List<Booking>();
+}
+
+@Html.DropDownListFor(model => model.SelectedOption.Id, new SelectList(Model.OptionsList, "Id", "Text"), new { @class = "select2", onchange = "handleDropdownChange(this)" })
 
 
+<div id="userBookingsContainer">
+    @Html.Partial("_UserBookings", bookings)
+</div>
 
 @section scripts {
     <script>
+        function handleDropdownChange(selectedValue) {
+            console.log(selectedValue);
+
+            var customerId = $(selectedValue).val();
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UpdateBookings", "Booking")' + '/' + customerId,
+                data: {},
+                success: function (response) {
+                    $('#userBookingsContainer').html(response);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
 
         $(document).ready(function () {
-            $('.js-example-basic-single').select2();
+            $('.select2').select2();
+            $('.select2').select2({ width: '50%' });
+            handleDropdownChange($('.select2').find('option:selected'));
         });
-
     </script>
 }

@@ -14,7 +14,7 @@ namespace HotelBookingApp.Services.BookingService
         }
         public async Task<ServiceResponse<List<Booking>>> GetBookingsAsync()
         {
-            var bookings = await _context.Bookings.ToListAsync();
+            var bookings = await _context.Bookings.Include(b => b.Room).Include(b  => b.Customer).ToListAsync();
             return new ServiceResponse<List<Booking>>
             {
                 Data = bookings
