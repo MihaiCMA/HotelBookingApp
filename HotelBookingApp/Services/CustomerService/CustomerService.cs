@@ -29,6 +29,15 @@ namespace HotelBookingApp.Services.CustomerService
             };
         }
 
+        public async Task<ServiceResponse<Customer>> GetCustomerByIdAsync(int customerId)
+        {
+            var customer = _context.Customers.Where(c => c.Id == customerId).FirstOrDefault();
+            return new ServiceResponse<Customer>()
+            {
+                Data = customer
+            };
+        }
+
         public async Task<ServiceResponse<Customer>> GetCustomerByUserAsync(IdentityUser identityUser)
         {
             var customer = await _context.Customers.Where(c => c.UserId == identityUser.Id).FirstOrDefaultAsync();
@@ -45,6 +54,27 @@ namespace HotelBookingApp.Services.CustomerService
             {
                 Data = customers
             };
+        }
+
+        public async Task<ServiceResponse<Customer>> UpdateCustomerAsync(Customer customer)
+        {
+            try
+            {
+                var response = _context.Customers.Update(customer);
+                await _context.SaveChangesAsync();
+
+                return new ServiceResponse<Customer>()
+                {
+                    Data = customer
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResponse<Customer>()
+                {
+                    Message = ex.Message
+                };
+            }
         }
     }
 }

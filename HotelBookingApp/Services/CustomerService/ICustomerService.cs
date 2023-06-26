@@ -7,6 +7,8 @@ namespace HotelBookingApp.Services.CustomerService
     {
         Task<ServiceResponse<List<Customer>>> GetCustomersAsync();
         Task<ServiceResponse<Customer>> GetCustomerByUserAsync(IdentityUser identityUser);
+        Task<ServiceResponse<Customer>> GetCustomerByIdAsync(int customerId);
         Task<ServiceResponse<Customer>> CreateCustomerAsync(IdentityUser identityUser);
+        Task<ServiceResponse<Customer>> UpdateCustomerAsync(Customer customer);
     }
 }
